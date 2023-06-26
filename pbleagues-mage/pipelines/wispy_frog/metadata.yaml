@@ -1,0 +1,61 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - output_file
+  - event_roster_scrape
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: league_event_scraper
+  retry_config: null
+  status: updated
+  type: data_loader
+  upstream_blocks: []
+  uuid: league_event_scraper
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: output_file
+  retry_config: null
+  status: executed
+  type: data_exporter
+  upstream_blocks:
+  - league_event_scraper
+  uuid: output_file
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: event_roster_scrape
+  retry_config: null
+  status: not_executed
+  type: data_loader
+  upstream_blocks:
+  - league_event_scraper
+  uuid: event_roster_scrape
+callbacks: []
+conditionals: []
+data_integration: null
+description: null
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: wispy frog
+spark_config: {}
+type: python
+updated_at: '2023-06-25 23:01:11'
+uuid: wispy_frog
+widgets: []
