@@ -13,14 +13,20 @@ if 'test' not in globals():
 
 BASE_URL = "https://pbleagues.com"
 
+
 def parse_date_range(date_range):
-    parts = re.split('\s*-\s*', date_range)
+    parts = re.split(' *- *', date_range)
     if len(parts) == 2:
         start, end = parts
-        end_day, year = end.split(', ')
-        start_month, start_day = re.split('\s+', start)
+        end_split = end.split(', ')
+        if len(end_split) != 2:
+            end_day = end_split[0]
+            year = datetime.now().year
+        else:
+            end_day, year = end_split
+        start_month, start_day = re.split(' +', start)
         if end_day[0].isalpha():
-            end_month, end_day = start_month, start_day = re.split('\s+', end_day)
+            end_month, end_day = start_month, start_day = re.split(' +', end_day)
         else:
             end_month = start_month
     else:
@@ -35,7 +41,7 @@ def parse_date_range(date_range):
 def scrape_events(league_id):
     # URL of the league page
     url = f"{BASE_URL}/leagues/{league_id}"
-    
+
     # Send an HTTP GET request and retrieve the HTML content
     response = requests.get(url)
     html_content = response.text
@@ -75,7 +81,6 @@ def create_events_dataframe(events):
     return df
 
 
-
 @data_loader
 def load_data(*args, **kwargs):
     """
@@ -92,7 +97,7 @@ def load_data(*args, **kwargs):
 
     # Create a DataFrame from the scraped events
     events_dataframe = create_events_dataframe(scraped_events)
-    
+
     return events_dataframe
 
 

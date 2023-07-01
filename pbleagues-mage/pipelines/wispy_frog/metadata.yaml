@@ -4,18 +4,18 @@ blocks:
   configuration: {}
   downstream_blocks:
   - output_file
-  - event_roster_scrape
+  - match_scraper
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: league_event_scraper
+  name: event_scraper
   retry_config: null
-  status: updated
+  status: executed
   type: data_loader
   upstream_blocks: []
-  uuid: league_event_scraper
-- all_upstream_blocks_executed: false
+  uuid: event_scraper
+- all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks: []
@@ -28,9 +28,9 @@ blocks:
   status: executed
   type: data_exporter
   upstream_blocks:
-  - league_event_scraper
+  - event_scraper
   uuid: output_file
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks: []
@@ -38,13 +38,13 @@ blocks:
   executor_type: local_python
   has_callback: false
   language: python
-  name: event_roster_scrape
+  name: match_scraper
   retry_config: null
-  status: not_executed
+  status: executed
   type: data_loader
   upstream_blocks:
-  - league_event_scraper
-  uuid: event_roster_scrape
+  - event_scraper
+  uuid: match_scraper
 callbacks: []
 conditionals: []
 data_integration: null
@@ -54,8 +54,11 @@ executor_count: 1
 executor_type: null
 extensions: {}
 name: wispy frog
+notification_config: {}
 spark_config: {}
 type: python
-updated_at: '2023-06-25 23:01:11'
+updated_at: '2023-07-01 05:10:44'
 uuid: wispy_frog
+variables:
+  league_id: 316
 widgets: []
