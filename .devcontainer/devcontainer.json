@@ -7,20 +7,35 @@
 		"context": "..",
 		// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
 		"dockerfile": "../Dockerfile"
-	}
-
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Uncomment the next line to run commands after the container is created.
-	// "postCreateCommand": "cat /etc/os-release",
-
-	// Configure tool-specific properties.
-	// "customizations": {},
-
-	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "devcontainer"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-python.flake8",
+				"ms-python.autopep8"
+			],
+			"settings": {
+				"python.formatting.autopep8Args": [
+					"--max-line-length",
+					"120",
+					"--experimental"
+				],
+				"python.formatting.provider": "autopep8",
+				"python.linting.flake8Enabled": true,
+				"python.linting.flake8Args": [
+					"--max-complexity=10",
+					"--ignore=F401,F403,F405",
+					"--max-line-length=120",
+					"--exclude=*/migrations/*",
+					"--verbose"
+				],
+				"python.linting.lintOnSave": true,
+				"python.linting.enabled": true,
+				"editor.formatOnSave": true
+			}
+		}
+	},
+	"postCreateCommand": "pip install -r /workspaces/nursa-mage-project/nursa_mage_project/requirements-dev.txt"
 }
