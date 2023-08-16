@@ -15,8 +15,9 @@ FORFEITED = 'F'
 
 
 def scrape_match_data(event_id):
-    url = f"{BASE_URL}/event/{event_id}/scores"
-    response = requests.get(url)
+    url = f"{BASE_URL}/event/{event_id}"
+    resource = "/scores"
+    response = requests.get(url + resource)
     soup = BeautifulSoup(response.text, 'html.parser')
 
     # Find all divisions
@@ -46,7 +47,7 @@ def scrape_match_data(event_id):
             for match in matches:
                 lgreen = match.find('td', class_=['lgreen'])
                 if not lgreen:
-                    print(f'warning: match not found {event_id} {division_name} {round_name}')
+                    # print(f'warning: match not found {event_id} {division_name} {round_name}')
                     continue
                 team_name = lgreen.find('a')['title']
                 score = lgreen.text.strip()
@@ -66,7 +67,7 @@ def scrape_match_data(event_id):
     # Create pandas DataFrame from the data
     df_match = pd.DataFrame(match_data, columns=['event_id', 'division', 'round',
                             'team1', 'team2', 'score1', 'score2', 'match_link'])
-
+    print(f'{event_id}:{len(df_match)} matches')
     return df_match
 
 
@@ -84,8 +85,8 @@ def load_data(*args, **kwargs):
                 first,
                 lambda x: x['event_id'].tolist(),
                 map(scrape_match_data),
-                pd.concat,
-                list)
+                list,
+                pd.concat)
 
 
 @test
