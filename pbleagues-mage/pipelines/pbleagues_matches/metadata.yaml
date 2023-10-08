@@ -12,40 +12,10 @@ blocks:
   name: event_scraper
   retry_config: null
   status: executed
+  timeout: null
   type: data_loader
   upstream_blocks: []
   uuid: event_scraper
-- all_upstream_blocks_executed: true
-  color: null
-  configuration: {}
-  downstream_blocks: []
-  executor_config: null
-  executor_type: local_python
-  has_callback: false
-  language: python
-  name: output_file
-  retry_config: null
-  status: updated
-  type: data_exporter
-  upstream_blocks:
-  - event_scraper
-  uuid: output_file
-- all_upstream_blocks_executed: true
-  color: null
-  configuration: {}
-  downstream_blocks: []
-  executor_config: null
-  executor_type: local_python
-  has_callback: false
-  language: python
-  name: output_file_replica
-  replicated_block: output_file
-  retry_config: null
-  status: updated
-  type: data_exporter
-  upstream_blocks:
-  - match_scraper
-  uuid: output_file_replica
 - all_upstream_blocks_executed: true
   color: null
   configuration: {}
@@ -57,25 +27,64 @@ blocks:
   language: python
   name: match_scraper
   retry_config: null
-  status: executed
+  status: updated
+  timeout: null
   type: data_loader
   upstream_blocks:
   - event_scraper
   uuid: match_scraper
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: output_file
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - event_scraper
+  uuid: output_file
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: output_file_replica
+  replicated_block: output_file
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - match_scraper
+  uuid: output_file_replica
 callbacks: []
+concurrency_config: {}
 conditionals: []
+created_at: null
 data_integration: null
 description: null
 executor_config: {}
 executor_count: 1
 executor_type: null
 extensions: {}
-name: wispy frog
+name: pbleagues-matches
 notification_config: {}
+retry_config: {}
+run_pipeline_in_one_process: false
 spark_config: {}
+tags: []
 type: python
-updated_at: '2023-07-01 05:45:15'
-uuid: wispy_frog
+updated_at: '2023-10-08 05:24:58'
+uuid: pbleagues_matches
 variables:
   league_id: 316
 widgets: []
