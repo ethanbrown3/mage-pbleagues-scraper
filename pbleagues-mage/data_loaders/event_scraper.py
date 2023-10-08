@@ -30,7 +30,7 @@ def parse_date_range(date_range):
         else:
             end_month = start_month
     else:
-        raise ValueError('Invalid date range format')
+        raise ValueError(f'{date_range} Invalid date range format')
 
     start_date = datetime.strptime(f'{start_month} {start_day} {year}', '%B %d %Y')
     end_date = datetime.strptime(f'{end_month} {end_day} {year}', '%B %d %Y')
@@ -57,12 +57,17 @@ def scrape_events(league_id):
     for event_row in events_table.find_all("tr"):
         columns = event_row.find_all("td")
         if len(columns) == 2:
-            date = columns[0].text.strip()
             event_link = columns[1].find("a")
             event_name = event_link.text.strip()
+            if 'practice' in event_name.lower():
+                continue
+            date = columns[0].text.strip()
             event_href = event_link["href"]
             event_id = int(event_href.rsplit('/', 1)[-1])
-            start_date, end_date = parse_date_range(date)
+            try:
+                start_date, end_date = parse_date_range(date)
+            except ValueError:
+                print(f'Event: {event_name} Invalid date range {date}')
             event = {
                 "event_id": event_id,
                 "date_string": date,
